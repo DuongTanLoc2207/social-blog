@@ -4,7 +4,7 @@ import { auth } from "../firebase-config";
 import { useAuth } from "../context/useAuth"; 
 
 const Header = () => {
-  const { currentUser } = useAuth(); // hoặc dùng state nếu chưa có context
+  const { currentUser } = useAuth(); 
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -19,7 +19,6 @@ const Header = () => {
   return (
     <header className="bg-white shadow sticky top-0 z-50">
       <div className="w-[80%] mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo + Links trái */}
         <div className="flex items-center gap-6">
           <Link to="/" className="text-xl font-bold text-blue-600">
             📝 BlogMini
@@ -35,12 +34,11 @@ const Header = () => {
           </nav>
         </div>
 
-        {/* User info / Auth buttons */}
         <div className="flex items-center gap-4 text-sm">
           {currentUser ? (
             <>
               <span className="text-gray-600 hidden sm:inline">
-                👋 {currentUser.email}
+                👋 {currentUser.displayName || currentUser.email}
               </span>
               <button
                 onClick={handleLogout}

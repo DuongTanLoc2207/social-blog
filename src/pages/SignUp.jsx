@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const SignUp = () => {
   const [signUpInput, setSignUpInput] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     const { name, value } = e.target;
@@ -23,6 +24,7 @@ const SignUp = () => {
         signUpInput.password
       );
       console.log("tạo tài khoản thành công");
+      navigate("/")
     } catch (error) {
       console.log(error);
     }
