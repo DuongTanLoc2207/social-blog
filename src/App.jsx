@@ -5,6 +5,7 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Header from "./components/Header.jsx";
 import SignUp from "./pages/SignUp.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx"
 
 function App() {
   return (
@@ -15,7 +16,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          {/* Thêm các route khác nếu cần */}
+          <Route element={<PrivateRoute/>}>
+            <Route path="/create" element={<div>Create Post Page</div>} />
+            <Route path="/my-posts" element={<div>My Posts Page</div>} />
+          </Route>
         </Routes>
       </div>
     </>

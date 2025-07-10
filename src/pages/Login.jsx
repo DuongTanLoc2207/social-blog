@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 import { auth } from "../firebase-config";
-import { Link, useNavigate } from "react-router"
-
+import { Link, Navigate, useNavigate } from "react-router";
 
 const Login = () => {
   const [loginInput, setLoginInput] = useState({ email: "", password: "" });
 
   const navigate = useNavigate();
-
+  const googleProvider = new GoogleAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
 
   const handleLogin = (e) => {
     const { name, value } = e.target;
@@ -18,6 +18,25 @@ const Login = () => {
       [name]: value,
     }));
   };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const userCredential = await  signInWithPopup(auth, googleProvider)
+      console.log("Đăng nhập Google thành công:", userCredential.user)
+      navigate("/")
+    } catch(error) {
+      console.error("Lỗi đăng nhập với Google:", error.message);
+    }
+  }
+  const handleFacebookLogin = async () => {
+    try {
+      const userCredential = await  signInWithPopup(auth, facebookProvider)
+      console.log("Đăng nhập Google thành công:", userCredential.user)
+      navigate("/")
+    } catch(error) {
+      console.error("Lỗi đăng nhập với Facebook:", error.message);
+    }
+  }
 
   const handleSubmit = async () => {
     try {
@@ -67,10 +86,22 @@ const Login = () => {
           />
         </label>
         <button
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition mb-2"
           onClick={handleSubmit}
         >
           Đăng nhập
+        </button>
+        <button
+          className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded mb-2"
+          onClick={handleGoogleLogin}
+        >
+          Đăng nhập với Google
+        </button>
+        <button
+          className="w-full bg-blue-800 hover:bg-blue-900 text-white py-2 px-4 rounded"
+          onClick={handleFacebookLogin}
+        >
+          Đăng nhập với Facebook
         </button>
 
         <p className="text-center text-sm mt-4">
