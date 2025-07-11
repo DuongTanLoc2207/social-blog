@@ -43,7 +43,6 @@ const Login = () => {
       console.log("Đăng nhập thành công:", userCredential.user);
     } catch (error) {
       console.error("Lỗi đăng nhập:", error.message);
-      // Bạn có thể hiển thị thông báo cho người dùng ở đây
     }
   };
 
