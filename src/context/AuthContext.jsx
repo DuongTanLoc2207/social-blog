@@ -8,28 +8,21 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let unsubscribe;
-    const timer = setTimeout(() => {
-      try {
-        unsubscribe = onAuthStateChanged(auth, (user) => {
-          setCurrentUser(user);
-        });
-      } catch (error) {
-        console.error("Error in auth state change:", error);
-      } finally {
-        setLoading(false);
-      }
-    }, 500);
-    return () => {
-      if (unsubscribe) unsubscribe();
-      clearTimeout(timer); 
-    };
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user); 
+      setLoading(false);  
+    }, (error) => {
+      console.error("Lỗi xác thực:", error);
+      setLoading(false); 
+    });
+
+    // Đảm bảo unsubscribe khi unmount
+    return () => unsubscribe();
   }, []);
 
-  if (loading) return <div className="mt-[20%]">Loading...</div>;
   return (
-    <AuthContext.Provider value={{ currentUser }}>
-      {children}
+    <AuthContext.Provider value={{ currentUser, loading }}>
+      {!loading ? children : <div className="flex items-center justify-center min-h-screen">Đang tải...</div>}
     </AuthContext.Provider>
   );
 };

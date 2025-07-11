@@ -40,7 +40,7 @@ const Home = () => {
   return (
     <div className="p-5 w-[50%] grid grid-cols-1 gap-6 mx-auto">
       {loading ? (
-        <p>Đang tải...</p>
+        <p className="flex items-center justify-center min-h-screen">Đang tải...</p>
       ) : posts.length === 0 ? (
         <p>chưa có bài viết nào</p>
       ) : (

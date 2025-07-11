@@ -7,6 +7,7 @@ import Header from "./components/Header.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import PostDetail from "./pages/PostDetail.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx"
+import CreatePost from "./pages/CreatePost.jsx";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/post/:id" element={<PostDetail/>}/>
           <Route element={<PrivateRoute/>}>
-            <Route path="/create" element={<div>Create Post Page</div>} />
+            <Route path="/create" element={<CreatePost/>} />
             <Route path="/my-posts" element={<div>My Posts Page</div>} />
           </Route>
         </Routes>
@@ -27,5 +28,6 @@ function App() {
     </>
   );
 }
+
 
 export default App;
