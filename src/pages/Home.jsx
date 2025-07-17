@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { db } from "../firebase-config";
 import { useAuth } from "../context/useAuth";
 import PostCard from "../components/PostCard";
-import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, query, orderBy, onSnapshot, limit } from "firebase/firestore";
 import Layout from "../components/Layout";
 
 const Home = () => {
@@ -15,30 +15,32 @@ const Home = () => {
   useEffect(() => {
     if (!currentUser) {
       navigate("/login");
-    } else {
-      const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
-      const unsubscribe = onSnapshot(
-        q,
-        (querySnapshot) => {
-          const postData = querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            author: doc.data().author,
-            title: doc.data().title,
-            content: doc.data().content,
-            timestamp: doc.data().timestamp,
-            likes: doc.data().likes || [],
-          }));
-          setPosts(postData);
-          setLoading(false);
-        },
-        (error) => {
-          console.error("Lỗi khi lấy dữ liệu bài viết:", error);
-          alert("Đã có lỗi khi tải bài viết!");
-          setLoading(false);
-        }
-      );
-      return () => unsubscribe();
+      return; // Ngăn không chạy tiếp nếu chưa đăng nhập
     }
+
+    const q = query(collection(db, "posts"), orderBy("timestamp", "desc"), limit(10));
+    const unsubscribe = onSnapshot(
+      q,
+      (querySnapshot) => {
+        const postData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          author: doc.data().author,
+          title: doc.data().title,
+          content: doc.data().content,
+          timestamp: doc.data().timestamp,
+          likes: doc.data().likes || [],
+        }));
+        setPosts(postData);
+        console.log("Posts loaded in Home:", postData); // Debug
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Lỗi khi lấy dữ liệu bài viết:", error);
+        alert("Đã có lỗi khi tải bài viết!");
+        setLoading(false);
+      }
+    );
+    return () => unsubscribe();
   }, [currentUser, navigate]);
 
   return (
