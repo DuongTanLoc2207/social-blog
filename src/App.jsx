@@ -2,12 +2,12 @@ import "./App.css";
 import { Routes, Route } from "react-router";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
-import Header from "./components/Header.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import PostDetail from "./pages/PostDetail.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx"
 import CreatePost from "./pages/CreatePost.jsx";
-import Layout from "./components/Layout.jsx";
+import MyPosts from "./pages/MyPosts.jsx";
+import EditPost from "./pages/EditPost.jsx";
 
 function App() {
   return (
@@ -21,7 +21,8 @@ function App() {
           <Route path="/post/:id" element={<PostDetail/>}/>
           <Route element={<PrivateRoute/>}>
             <Route path="/create" element={<CreatePost/>} />
-            <Route path="/my-posts" element={<Layout/>} />
+            <Route path="/my-posts" element={<MyPosts/>} />
+            <Route path="/edit/:id" element={<EditPost />} />
           </Route>
         </Routes>
       {/* </div> */}
