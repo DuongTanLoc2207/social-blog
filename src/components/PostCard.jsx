@@ -50,13 +50,13 @@ const PostCard = ({ id, author, title, content, timestamp, likes = [] }) => {
 
   return (
     <div
-      className="bg-white shadow-md rounded-lg p-5 hover:shadow-lg transition"
+      className="bg-white shadow-md rounded-lg p-5 hover:shadow-lg transition cursor-pointer"
       onClick={handleCardClick}
     >
-      <h2 className="text-xl font-bold text-blue-600">{title}</h2>
-      <p className="text-sm text-gray-500 mb-2">{author}</p>
-      <p className="text-gray-700">{content}</p>
-      <p className="text-gray-500">
+      <h2 className="text-lg sm:text-xl font-bold text-blue-600">{title}</h2>
+      <p className="text-sm sm:text-base text-gray-500 mb-2">{author}</p>
+      <p className="text-sm sm:text-base text-gray-700">{content}</p>
+      <p className="text-sm sm:text-base text-gray-500">
         {timestamp?.toDate().toLocaleString("vi-VN")}
       </p>
       <div className="mt-4 flex items-center gap-2">
@@ -73,9 +73,9 @@ const PostCard = ({ id, author, title, content, timestamp, likes = [] }) => {
           disabled={!currentUser || isLiking}
           aria-label={isLiked ? "Bỏ thích bài viết" : "Thích bài viết"}
         >
-          {isLiking ? "⏳" : "❤️"}
+          {isLiking ? "⏳" : <span className="cursor-pointer">❤️</span>}
         </button>
-        <span className="text-gray-600">{likeCount} lượt thích</span>
+        <span className="text-sm sm:text-base text-gray-600">{likeCount} lượt thích</span>
       </div>
     </div>
   );

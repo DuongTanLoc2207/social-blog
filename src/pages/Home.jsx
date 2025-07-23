@@ -3,8 +3,21 @@ import { useNavigate } from "react-router";
 import { db } from "../firebase-config";
 import { useAuth } from "../context/useAuth";
 import PostCard from "../components/PostCard";
-import { collection, query, orderBy, onSnapshot, limit } from "firebase/firestore";
+import {
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  limit,
+} from "firebase/firestore";
 import Layout from "../components/Layout";
+import { css } from "@emotion/react";
+import { ClipLoader } from "react-spinners";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+`;
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -18,7 +31,11 @@ const Home = () => {
       return; // Ngăn không chạy tiếp nếu chưa đăng nhập
     }
 
-    const q = query(collection(db, "posts"), orderBy("timestamp", "desc"), limit(10));
+    const q = query(
+      collection(db, "posts"),
+      orderBy("timestamp", "desc"),
+      limit(10)
+    );
     const unsubscribe = onSnapshot(
       q,
       (querySnapshot) => {
@@ -45,11 +62,11 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className="p-5 w-[50%] grid grid-cols-1 gap-6 mx-auto">
+      <div className="p-2 sm:p-4 md:p-5 grid grid-cols-1 gap-4 sm:gap-6 mx-auto max-w-[80%] sm:max-w-[60%] md:max-w-[50%]">
         {loading ? (
-          <p className="flex items-center justify-center min-h-screen text-gray-600">
-            Đang tải...
-          </p>
+          <div className="flex items-center justify-center min-h-screen">
+            <ClipLoader color="#3498db" css={override} size={50} />
+          </div>
         ) : posts.length === 0 ? (
           <p className="text-center text-gray-600">Chưa có bài viết nào</p>
         ) : (
