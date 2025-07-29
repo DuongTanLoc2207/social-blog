@@ -15,6 +15,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.animate-fadeOut {
+  animation: fadeOut 3s forwards;
+}
+
 /* a {
   font-weight: 500;
   color: #646cff;
